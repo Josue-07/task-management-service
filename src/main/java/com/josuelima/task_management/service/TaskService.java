@@ -4,6 +4,7 @@ import com.josuelima.task_management.dto.request.TaskRequestDto;
 import com.josuelima.task_management.dto.request.TaskStatusUpdateDto;
 import com.josuelima.task_management.dto.response.ListTasksResponseDto;
 import com.josuelima.task_management.dto.response.TaskResponseDto;
+import com.josuelima.task_management.exceptions.NotFoundTaskException;
 import com.josuelima.task_management.mapper.TaskMapper;
 import com.josuelima.task_management.model.Task;
 import com.josuelima.task_management.repositories.TaskRepository;
@@ -31,6 +32,7 @@ public class TaskService {
                 taskRequestDto.prioridade(),
                 taskRequestDto.prazo());
 
+
         taskRepository.save(task);
 
         return taskMapper.toTaskResponseDto(task);
@@ -41,12 +43,12 @@ public class TaskService {
     }
 
     public TaskResponseDto getTaskById(UUID id) {
-        Task task = taskRepository.findById(id).orElseThrow(() -> new RuntimeException("Task não encontrada"));
+        Task task = taskRepository.findById(id).orElseThrow(() -> new NotFoundTaskException("Task não encontrada ou não existe."));
         return taskMapper.toTaskResponseDto(task);
     }
 
     public TaskResponseDto updateTask(UUID id, TaskRequestDto taskRequestDto) {
-        Task task = taskRepository.findById(id).orElseThrow(() -> new RuntimeException("Task não existe ou não encontrado."));
+        Task task = taskMapper.toTask(this.getTaskById(id));
 
         task.setNome(taskRequestDto.nome());
         task.setDescricao(taskRequestDto.descricao());
@@ -61,7 +63,7 @@ public class TaskService {
 
     public TaskResponseDto updateStatusTask(UUID id, TaskStatusUpdateDto taskStatusUpdateDto) {
 
-        Task task = taskRepository.findById(id).orElseThrow(() -> new RuntimeException("Task não existe ou não encontrado."));
+        Task task = taskMapper.toTask(this.getTaskById(id));
 
         task.setStatus(taskStatusUpdateDto.status());
         task.setUltimaAtualizacao(LocalDateTime.now());
@@ -71,7 +73,7 @@ public class TaskService {
     }
 
     public void deleteTask(UUID id) {
-        Task task = taskRepository.findById(id).orElseThrow(() -> new RuntimeException("Task não existe ou não encontrado."));
+        Task task = taskMapper.toTask(this.getTaskById(id));
         taskRepository.delete(task);
     }
 

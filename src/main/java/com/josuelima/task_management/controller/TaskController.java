@@ -30,7 +30,12 @@ public class TaskController {
 
     @GetMapping("/tasks")
     public ResponseEntity<ListTasksResponseDto> listAllTasks() {
-        return ResponseEntity.ok(taskService.listTasks());
+        ListTasksResponseDto response = taskService.listTasks();
+
+        if (response.tasks() == null || response.tasks().isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/task/{id}")

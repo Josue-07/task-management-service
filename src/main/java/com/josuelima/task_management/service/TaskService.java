@@ -48,8 +48,11 @@ public class TaskService {
 
     public TaskPaginationDto<ListTasksResponseDto> listTasks(int page, int size) {
         log.debug("Iniciando listagem de todas as tasks");
+
         Page<Task> taskPage = taskRepository.findAll(PageRequest.of(page, size));
-        return new TaskPaginationDto<>( taskMapper.toListTaskResponseDto(taskPage.getContent()), taskPage.getNumber(), taskPage.getSize(), taskPage.getTotalElements(), taskPage.getTotalPages());
+        ListTasksResponseDto tasks = taskMapper.toListTaskResponseDto(taskPage.getContent());
+
+        return new TaskPaginationDto<>(tasks, taskPage.getNumber(), taskPage.getSize(), taskPage.getTotalElements(), taskPage.getTotalPages());
 
     }
 

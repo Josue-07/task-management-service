@@ -11,6 +11,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface TaskMapper {
 
+    Task toTask(TaskResponseDto taskResponseDto);
     TaskResponseDto toTaskResponseDto(Task task);
     List<TaskResponseDto> toTaskResponseDtoList(List<Task> tasks);
 

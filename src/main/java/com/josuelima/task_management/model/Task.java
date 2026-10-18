@@ -4,6 +4,7 @@ import com.josuelima.task_management.enums.Prioridade;
 import com.josuelima.task_management.enums.Status;
 import jakarta.persistence.*;
 import lombok.*;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -30,8 +31,8 @@ public class Task {
     public Task(String nome, String descricao, Status status, Prioridade prioridade, LocalDateTime prazo) {
         this.nome = nome;
         this.descricao = descricao;
-        this.status = status;
-        this.prioridade = prioridade;
+        this.status = status != null ? status : Status.PENDENTE;
+        this.prioridade = prioridade != null ? prioridade : Prioridade.BAIXA;
         this.prazo = prazo;
         this.dataCriacao = LocalDateTime.now();
         this.ultimaAtualizacao = this.dataCriacao;

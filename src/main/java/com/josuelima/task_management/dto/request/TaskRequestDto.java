@@ -15,10 +15,10 @@ public record TaskRequestDto(
         @NotNull
         String descricao,
 
-        @NotNull(message = "O nome da prioridade da tarefa é obrigatoria. (BAIXA, MEDIA, ALTA, URGENTE)")
+        //@NotNull(message = "O nome da prioridade da tarefa é obrigatoria.")
         Prioridade prioridade,
 
-        @NotNull(message = "O status da tarefa é obrigatoria. (PENDENTE, EM_ANDAMENTO, CONCLUIDO ou COM_IMPEDIMENTO)")
+        //@NotNull(message = "O status da tarefa é obrigatoria.")
         Status status,
 
         @NotNull(message = "O prazo é obrigatório.")

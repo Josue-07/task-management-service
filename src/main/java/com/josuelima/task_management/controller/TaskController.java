@@ -7,11 +7,13 @@ import com.josuelima.task_management.dto.response.ListTasksResponseDto;
 import com.josuelima.task_management.dto.response.TaskResponseDto;
 import com.josuelima.task_management.service.TaskService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -32,8 +34,8 @@ public class TaskController {
 
     @GetMapping("/tasks")
     public ResponseEntity<TaskPaginationDto<ListTasksResponseDto>> listAllTasks(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size
+            @RequestParam(defaultValue = "0") @PositiveOrZero int page,
+            @RequestParam(defaultValue = "5") @Max(20) @Positive int size
     ) {
         TaskPaginationDto<ListTasksResponseDto> response = taskService.listTasks(page, size);
 

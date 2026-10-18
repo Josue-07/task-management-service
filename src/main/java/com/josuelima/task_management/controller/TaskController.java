@@ -1,5 +1,6 @@
 package com.josuelima.task_management.controller;
 
+import com.josuelima.task_management.dto.TaskPaginationDto;
 import com.josuelima.task_management.dto.request.TaskRequestDto;
 import com.josuelima.task_management.dto.request.TaskStatusUpdateDto;
 import com.josuelima.task_management.dto.response.ListTasksResponseDto;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -29,10 +31,13 @@ public class TaskController {
     }
 
     @GetMapping("/tasks")
-    public ResponseEntity<ListTasksResponseDto> listAllTasks() {
-        ListTasksResponseDto response = taskService.listTasks();
+    public ResponseEntity<TaskPaginationDto<ListTasksResponseDto>> listAllTasks(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size
+    ) {
+        TaskPaginationDto<ListTasksResponseDto> response = taskService.listTasks(page, size);
 
-        if (response.tasks() == null || response.tasks().isEmpty()) {
+        if (response.data().tasks() == null || response.data().tasks().isEmpty()) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(response);

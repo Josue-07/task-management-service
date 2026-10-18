@@ -1,15 +1,19 @@
 package com.josuelima.task_management.service;
 
+import com.josuelima.task_management.dto.TaskPaginationDto;
 import com.josuelima.task_management.dto.request.TaskRequestDto;
 import com.josuelima.task_management.dto.request.TaskStatusUpdateDto;
 import com.josuelima.task_management.dto.response.ListTasksResponseDto;
 import com.josuelima.task_management.dto.response.TaskResponseDto;
-import com.josuelima.task_management.mapper.TaskMapper;
+import com.josuelima.task_management.dto.mapper.TaskMapper;
 import com.josuelima.task_management.model.Task;
 import com.josuelima.task_management.repositories.TaskRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -36,9 +40,15 @@ public class TaskService {
         return taskMapper.toTaskResponseDto(task);
     }
 
-    public ListTasksResponseDto listTasks() {
-        return taskMapper.toListTaskResponseDto(taskRepository.findAll());
+    public TaskPaginationDto<ListTasksResponseDto> listTasks(int page, int size) {
+        Page<Task> taskPage = taskRepository.findAll(PageRequest.of(page, size));
+        return new TaskPaginationDto<>( taskMapper.toListTaskResponseDto(taskPage.getContent()), taskPage.getNumber(), taskPage.getSize(), taskPage.getTotalElements(), taskPage.getTotalPages());
+
     }
+
+//    public ListTasksResponseDto listTasks() {
+//        return taskMapper.toListTaskResponseDto(taskRepository.findAll());
+//    }
 
     public TaskResponseDto getTaskById(UUID id) {
         Task task = taskRepository.findById(id).orElseThrow(() -> new RuntimeException("Task não encontrada"));

@@ -41,7 +41,7 @@ public class TaskService {
                 taskRequestDto.prazo());
 
         taskRepository.save(task);
-        log.info("Tarefa criad a com sucesso. id={}", task.getId());
+        log.info("Tarefa criada com sucesso. id={}", task.getId());
 
         return taskMapper.toTaskResponseDto(task);
     }

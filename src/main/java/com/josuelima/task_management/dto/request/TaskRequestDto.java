@@ -12,13 +12,13 @@ public record TaskRequestDto(
         @NotBlank(message = "O nome da tarefa é obrigatório.")
         String nome,
 
-        @NotNull
+//        @NotNull
         String descricao,
 
-        //@NotNull(message = "O nome da prioridade da tarefa é obrigatoria.")
+        @NotNull(message = "O nome da prioridade da tarefa é obrigatoria.")
         Prioridade prioridade,
 
-        //@NotNull(message = "O status da tarefa é obrigatoria.")
+        @NotNull(message = "O status da tarefa é obrigatoria.")
         Status status,
 
         @NotNull(message = "O prazo é obrigatório.")

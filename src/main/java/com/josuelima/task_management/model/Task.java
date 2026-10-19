@@ -31,8 +31,8 @@ public class Task {
     public Task(String nome, String descricao, Status status, Prioridade prioridade, LocalDateTime prazo) {
         this.nome = nome;
         this.descricao = descricao;
-        this.status = status != null ? status : Status.PENDENTE;
-        this.prioridade = prioridade != null ? prioridade : Prioridade.BAIXA;
+        this.status = status;
+        this.prioridade = prioridade;
         this.prazo = prazo;
         this.dataCriacao = LocalDateTime.now();
         this.ultimaAtualizacao = this.dataCriacao;

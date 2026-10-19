@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.time.LocalDateTime;
@@ -26,11 +27,11 @@ public class GlobalExceptionHandler {
                 .body(new ErrorResponseModel(dataFormatada(LocalDateTime.now()), request, HttpStatus.BAD_REQUEST, result));
     }
 
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<ErrorResponseModel> handleHttpMessageNotReadableException(HttpServletRequest request, HttpMessageNotReadableException e) {
+    @ExceptionHandler(HandlerMethodValidationException.class)
+    public ResponseEntity<ErrorResponseModel> handleHandlerMethodValidationException(HttpServletRequest request, HandlerMethodValidationException e) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
-                .body(new ErrorResponseModel(dataFormatada(LocalDateTime.now()), request, HttpStatus.BAD_REQUEST, "Valor(s) invalido(s) no corpo da requisição. Por favor, verifique os dados fornecidos."));
+                .body(new ErrorResponseModel(dataFormatada(LocalDateTime.now()), request, HttpStatus.BAD_REQUEST, e.getParameterValidationResults()));
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
@@ -38,6 +39,13 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorResponseModel(dataFormatada(LocalDateTime.now()), request, HttpStatus.BAD_REQUEST, String.format("Tipo de argumento invalido para o parâmetro {%s}. Valor fornecido: '%s'.", e.getName(), e.getValue())));
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorResponseModel> handleHttpMessageNotReadableException(HttpServletRequest request, HttpMessageNotReadableException e) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorResponseModel(dataFormatada(LocalDateTime.now()), request, HttpStatus.BAD_REQUEST, "Valor(s) invalido(s) no corpo da requisição. Por favor, verifique os dados fornecidos."));
     }
 
     @ExceptionHandler(NotFoundTaskException.class)

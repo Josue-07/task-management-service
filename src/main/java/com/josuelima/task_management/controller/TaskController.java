@@ -1,9 +1,9 @@
 package com.josuelima.task_management.controller;
 
-import com.josuelima.task_management.dto.request.TaskRequestDto;
-import com.josuelima.task_management.dto.request.TaskStatusUpdateDto;
-import com.josuelima.task_management.dto.response.ListTasksResponseDto;
-import com.josuelima.task_management.dto.response.TaskResponseDto;
+import com.josuelima.task_management.dto.task.request.TaskRequestDto;
+import com.josuelima.task_management.dto.task.request.TaskStatusUpdateDto;
+import com.josuelima.task_management.dto.task.response.ListTasksResponseDto;
+import com.josuelima.task_management.dto.task.response.TaskResponseDto;
 import com.josuelima.task_management.service.TaskService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

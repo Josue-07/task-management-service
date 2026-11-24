@@ -1,4 +1,4 @@
-package com.josuelima.task_management.mapper;
+package com.josuelima.task_management.dto.mapper;
 
 import com.josuelima.task_management.dto.login.request.RegisterUserRequestDto;
 import com.josuelima.task_management.dto.login.response.RegisterUserResponseDto;

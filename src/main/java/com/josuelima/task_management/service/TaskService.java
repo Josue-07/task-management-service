@@ -1,11 +1,11 @@
 package com.josuelima.task_management.service;
 
+import com.josuelima.task_management.dto.mapper.TaskMapper;
 import com.josuelima.task_management.dto.task.request.TaskRequestDto;
 import com.josuelima.task_management.dto.task.request.TaskStatusUpdateDto;
 import com.josuelima.task_management.dto.task.response.ListTasksResponseDto;
 import com.josuelima.task_management.dto.task.response.TaskResponseDto;
 import com.josuelima.task_management.exceptions.NotFoundTaskException;
-import com.josuelima.task_management.mapper.TaskMapper;
 import com.josuelima.task_management.model.Task;
 import com.josuelima.task_management.repositories.TaskRepository;
 import lombok.extern.slf4j.Slf4j;

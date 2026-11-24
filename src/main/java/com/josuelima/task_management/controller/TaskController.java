@@ -1,15 +1,11 @@
 package com.josuelima.task_management.controller;
 
-import com.josuelima.task_management.dto.TaskPaginationDto;
-import com.josuelima.task_management.dto.request.TaskRequestDto;
-import com.josuelima.task_management.dto.request.TaskStatusUpdateDto;
-import com.josuelima.task_management.dto.response.ListTasksResponseDto;
-import com.josuelima.task_management.dto.response.TaskResponseDto;
+import com.josuelima.task_management.dto.task.request.TaskRequestDto;
+import com.josuelima.task_management.dto.task.request.TaskStatusUpdateDto;
+import com.josuelima.task_management.dto.task.response.ListTasksResponseDto;
+import com.josuelima.task_management.dto.task.response.TaskResponseDto;
 import com.josuelima.task_management.service.TaskService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,13 +29,10 @@ public class TaskController {
     }
 
     @GetMapping("/tasks")
-    public ResponseEntity<TaskPaginationDto<ListTasksResponseDto>> listAllTasks(
-            @RequestParam(defaultValue = "0") @PositiveOrZero int page,
-            @RequestParam(defaultValue = "5") @Max(20) @Positive int size
-    ) {
-        TaskPaginationDto<ListTasksResponseDto> response = taskService.listTasks(page, size);
+    public ResponseEntity<ListTasksResponseDto> listAllTasks() {
+        ListTasksResponseDto response = taskService.listTasks();
 
-        if (response.data().tasks() == null || response.data().tasks().isEmpty()) {
+        if (response.tasks() == null || response.tasks().isEmpty()) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(response);

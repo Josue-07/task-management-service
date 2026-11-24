@@ -1,16 +1,13 @@
 package com.josuelima.task_management.service;
 
-import com.josuelima.task_management.dto.TaskPaginationDto;
-import com.josuelima.task_management.dto.request.TaskRequestDto;
-import com.josuelima.task_management.dto.request.TaskStatusUpdateDto;
-import com.josuelima.task_management.dto.response.ListTasksResponseDto;
-import com.josuelima.task_management.dto.response.TaskResponseDto;
-import com.josuelima.task_management.exceptions.NotFoundTaskException;
 import com.josuelima.task_management.dto.mapper.TaskMapper;
+import com.josuelima.task_management.dto.task.request.TaskRequestDto;
+import com.josuelima.task_management.dto.task.request.TaskStatusUpdateDto;
+import com.josuelima.task_management.dto.task.response.ListTasksResponseDto;
+import com.josuelima.task_management.dto.task.response.TaskResponseDto;
+import com.josuelima.task_management.exceptions.NotFoundTaskException;
 import com.josuelima.task_management.model.Task;
 import com.josuelima.task_management.repositories.TaskRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -40,20 +37,16 @@ public class TaskService {
                 taskRequestDto.prioridade(),
                 taskRequestDto.prazo());
 
+
         taskRepository.save(task);
-        log.info("Tarefa criada com sucesso. id={}", task.getId());
+        log.info("Tarefa criad a com sucesso. id={}", task.getId());
 
         return taskMapper.toTaskResponseDto(task);
     }
 
-    public TaskPaginationDto<ListTasksResponseDto> listTasks(int page, int size) {
+    public ListTasksResponseDto listTasks() {
         log.debug("Iniciando listagem de todas as tasks");
-
-        Page<Task> taskPage = taskRepository.findAll(PageRequest.of(page, size));
-        ListTasksResponseDto tasks = taskMapper.toListTaskResponseDto(taskPage.getContent());
-
-        return new TaskPaginationDto<>(tasks, taskPage.getNumber(), taskPage.getSize(), taskPage.getTotalElements(), taskPage.getTotalPages());
-
+        return taskMapper.toListTaskResponseDto(taskRepository.findAll());
     }
 
     public TaskResponseDto getTaskById(UUID id) {

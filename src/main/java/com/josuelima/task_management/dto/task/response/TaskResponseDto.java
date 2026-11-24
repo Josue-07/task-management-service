@@ -1,4 +1,4 @@
-package com.josuelima.task_management.dto.response;
+package com.josuelima.task_management.dto.task.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.josuelima.task_management.enums.Prioridade;

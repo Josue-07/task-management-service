@@ -1,7 +1,7 @@
 package com.josuelima.task_management.dto.mapper;
 
-import com.josuelima.task_management.dto.response.ListTasksResponseDto;
-import com.josuelima.task_management.dto.response.TaskResponseDto;
+import com.josuelima.task_management.dto.task.response.ListTasksResponseDto;
+import com.josuelima.task_management.dto.task.response.TaskResponseDto;
 import com.josuelima.task_management.model.Task;
 import org.mapstruct.Mapper;
 

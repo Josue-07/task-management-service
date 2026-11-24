@@ -1,4 +1,4 @@
-package com.josuelima.task_management.dto.request;
+package com.josuelima.task_management.dto.task.request;
 
 import com.josuelima.task_management.enums.Status;
 import jakarta.validation.constraints.NotNull;

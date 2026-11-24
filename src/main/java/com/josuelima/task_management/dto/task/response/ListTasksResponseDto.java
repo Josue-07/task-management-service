@@ -1,4 +1,4 @@
-package com.josuelima.task_management.dto.response;
+package com.josuelima.task_management.dto.task.response;
 
 import java.util.List;
 
